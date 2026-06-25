@@ -105,7 +105,21 @@
   }
   </script>
 
-  <!-- ══ 單一資料源 教學據點 — Schema 與畫面從同一份 JSON 渲染（編輯這裡就夠） ══ -->
+  <!-- ══════════════════════════════════════════════════════════════════════════════
+       單一資料源 — 教學據點清單（同時是 LocalBusiness × 44 schema 與畫面渲染來源）
+
+       @dynamic-from-corp: classroom-list
+       ─────────────────────────────────────────────────────────────────────────────
+       上線時請由 Rails 從 Corp 系統（corp.orangeapple.co）動態渲染此 <script> 區塊內容、
+       讓「實體區經理在 Corp 改地址」時、官網教室列表自動同步（含 Google Maps 連結）。
+
+       靜態 fallback：以下為 2026/06/25 從 https://orangeapple.co/classroom 抓取的快照、
+       Rails 渲染失敗時作為兜底資料。
+
+       資料 schema：每筆需包含 _city, _district, _short, address.streetAddress /
+       addressLocality / addressRegion / addressCountry, telephone (+886-X-XXXX-XXXX 格式)
+       可選欄位：_extra（特色說明，如「中文 + 英文授課」）
+       ══════════════════════════════════════════════════════════════════════════════ -->
   <script id="locations-data" type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -153,7 +167,7 @@
       { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#kaohsiung-fengshan-wujia", "name": "高雄鳳山五甲教室 — 橘子蘋果程式學苑", "_city": "高雄市", "_district": "鳳山區", "_short": "高雄鳳山五甲教室", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "福祥街76號", "addressLocality": "鳳山區", "addressRegion": "高雄市", "addressCountry": "TW" }, "telephone": "+886-2-7709-8229", "url": "https://orangeapple.co/classroom/#kaohsiung-fengshan-wujia" },
       { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#kaohsiung-fengshan-wenshan", "name": "高雄鳳山文山教室 — 橘子蘋果程式學苑", "_city": "高雄市", "_district": "鳳山區", "_short": "高雄鳳山文山教室", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "文澄街56號1-3樓", "addressLocality": "鳳山區", "addressRegion": "高雄市", "addressCountry": "TW" }, "telephone": "+886-2-7709-8229", "url": "https://orangeapple.co/classroom/#kaohsiung-fengshan-wenshan" },
       { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#pingtung", "name": "屏東教室 — 橘子蘋果程式學苑", "_city": "屏東縣", "_district": "屏東市", "_short": "屏東教室", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "廣東路1516號", "addressLocality": "屏東市", "addressRegion": "屏東縣", "addressCountry": "TW" }, "telephone": "+886-2-7709-8229", "url": "https://orangeapple.co/classroom/#pingtung" },
-      { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#malaysia-sripetaling", "name": "Sri Petaling Branch — Orange Apple Programming Academy", "_city": "馬來西亞", "_district": "Kuala Lumpur", "_short": "Sri Petaling Branch", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "21-1, JLN 1/149J, Bandar Baru Sri Petaling", "addressLocality": "Kuala Lumpur", "addressRegion": "Wilayah Persekutuan", "postalCode": "57000", "addressCountry": "MY" }, "telephone": "+60-3-2774-5388", "url": "https://orangeapple.co/classroom/#malaysia-sripetaling" }
+      { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#malaysia-sripetaling", "name": "Sri Petaling Branch — Orange Apple Programming Academy", "_city": "馬來西亞", "_district": "Kuala Lumpur", "_short": "Sri Petaling Branch（吉隆坡分校）", "_extra": "中文 + 英文授課", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "21-1, JLN 1/149J, Bandar Baru Sri Petaling", "addressLocality": "Kuala Lumpur", "addressRegion": "Wilayah Persekutuan", "postalCode": "57000", "addressCountry": "MY" }, "telephone": "+60-3-2774-5388", "url": "https://orangeapple.co/classroom/#malaysia-sripetaling" }
     ]
   }
   </script>
@@ -177,12 +191,17 @@
       {
         "@type": "Question",
         "name": "怎麼預約特定教室的試聽？",
-        "acceptedAnswer": { "@type": "Answer", "text": "點選任一教室卡片的『預約該教室試聽』按鈕、或直接致電 (02) 7709-8229 由專員協助安排。試聽完全免費、適用於玩創系列與菁英系列常態課程。" }
+        "acceptedAnswer": { "@type": "Answer", "text": "點本頁頂部或底部的『<strong>預約免費試聽</strong>』按鈕填寫表單時、可指定希望試聽的教室；或直接致電 <strong>(02) 7709-8229</strong> 由專員協助安排。試聽完全免費、適用於玩創系列與菁英系列常態課程。" }
       },
       {
         "@type": "Question",
-        "name": "馬來西亞分校開哪些課程？",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sri Petaling Branch（馬來西亞吉隆坡分校）以中文授課、提供與台灣相同的玩創與菁英系列課程。詳細課程梯次請致電 (03) 2774-5388 詢問當地專員。" }
+        "name": "馬來西亞分校開哪些課程？是中文授課還是英文？",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sri Petaling Branch（馬來西亞吉隆坡分校）<strong>同時提供中文與英文授課</strong>、家長可依孩子的語言偏好選擇、提供與台灣相同的玩創與菁英系列課程。詳細課程梯次與語言選項請致電 (03) 2774-5388 詢問當地專員。" }
+      },
+      {
+        "@type": "Question",
+        "name": "寒暑假營隊在哪些教室開課？",
+        "acceptedAnswer": { "@type": "Answer", "text": "<strong>寒暑假營隊與常態教室開課不一定相同</strong>。常態教室是每週固定開課的據點、營隊則屬於密集短期課程、可能借用其他教室或場地開設。每年寒暑假的營隊梯次與地點以營隊頁面公告為準、建議家長關注橘蘋官網營隊資訊、或致電 (02) 7709-8229 詢問該縣市最近梯次。" }
       },
       {
         "@type": "Question",
@@ -192,7 +211,7 @@
       {
         "@type": "Question",
         "name": "教室停車方便嗎？",
-        "acceptedAnswer": { "@type": "Answer", "text": "各教室周邊停車狀況不同。多數教室鄰近捷運站、公車站或學校、適合步行或大眾運輸前往。如需停車場資訊、建議致電該教室電話確認、或使用 Google Maps 查詢附近停車場。" }
+        "acceptedAnswer": { "@type": "Answer", "text": "各教室周邊停車狀況不同。多數教室鄰近捷運站、公車站或學校、適合步行或大眾運輸前往。如需停車場資訊、建議致電該教室或總機 (02) 7709-8229 確認、或使用 Google Maps 查詢附近停車場。" }
       }
     ]
   }
@@ -550,6 +569,22 @@
       min-height: 22px;
     }
     .finder-status strong { color: var(--orange-dark); }
+    .finder-notice {
+      max-width: 720px;
+      margin: 24px auto 0;
+      padding: 12px 18px;
+      background: var(--teal-pale);
+      border-left: 3px solid var(--teal);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .finder-notice-icon { flex-shrink: 0; font-size: 1.05rem; }
+    .finder-notice strong { color: var(--teal-dark); }
 
     /* ══════════════════════════════════════ 3. 教室卡片網格 ══════════════════════════════════════ */
     .sec-locations {
@@ -634,40 +669,21 @@
       text-underline-offset: 3px;
     }
     .loc-row a:hover { color: var(--orange-dark); text-decoration-color: var(--orange); }
-    .loc-card-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: auto;
-      padding-top: 12px;
-      border-top: 1px solid var(--line-soft);
+    .loc-row-note {
+      font-size: 0.78rem;
+      color: var(--text-mute);
+      background: var(--line-soft);
+      padding: 1px 7px;
+      border-radius: 6px;
+      margin-left: 4px;
+      flex-shrink: 0;
     }
-    .loc-btn {
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 0.88rem;
+    .loc-row-extra {
+      color: var(--teal-dark);
       font-weight: 700;
-      text-decoration: none;
-      text-align: center;
-      transition: all 0.2s;
-      border: 1.5px solid;
+      font-size: 0.88rem;
     }
-    .loc-btn-primary {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #fff;
-    }
-    .loc-btn-primary:hover {
-      background: var(--orange-dark);
-      border-color: var(--orange-dark);
-      color: #fff;
-    }
-    .loc-btn-secondary {
-      background: #fff;
-      border-color: var(--orange-pale);
-      color: var(--orange-dark);
-    }
-    .loc-btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+    .loc-row-extra .loc-row-icon { color: var(--teal); }
 
     .locations-empty {
       text-align: center;
@@ -944,7 +960,7 @@
     <div class="tldr-container">
       <span class="tldr-eyebrow">▸ 重點摘要 · 30 秒看橘蘋據點</span>
       <p class="tldr-summary">
-        <strong>橘子蘋果程式學苑</strong>實體教學據點目前涵蓋 <strong>12 縣市 44 間教室</strong> — 台北 7 間、新北 12 間、桃園 3 間、台中 5 間、台南 5 間、高雄 5 間、新竹 2 間，基隆、苗栗、嘉義、屏東各 1 間，並有 <strong>馬來西亞吉隆坡海外分校</strong>。住家附近沒有實體教室？<strong>線上課程不限地區</strong>、教學品質與實體完全相同、累積 3,000+ 位線上學生口碑。本頁可依縣市快速篩選、或輸入區域名稱即時搜尋最近教室、並一鍵預約該教室免費試聽。
+        <strong>橘子蘋果程式學苑</strong>實體教學據點目前涵蓋 <strong>12 縣市 44 間教室</strong> — 台北 7 間、新北 12 間、桃園 3 間、台中 5 間、台南 5 間、高雄 5 間、新竹 2 間，基隆、苗栗、嘉義、屏東各 1 間，並有 <strong>馬來西亞吉隆坡海外分校</strong>（提供<strong>中文 + 英文授課</strong>）。寒暑假另開設<strong>營隊教室</strong>，可能借用其他場地、不一定與常態教室相同。住家附近沒有實體教室？<strong>線上課程不限地區</strong>、教學品質與實體完全相同。本頁可依縣市快速篩選、或輸入區域名稱即時搜尋最近教室。
       </p>
     </div>
   </section>
@@ -982,6 +998,12 @@
 
       <!-- 搜尋結果狀態 -->
       <div class="finder-status" id="finder-status" aria-live="polite"></div>
+
+      <!-- 常態 vs 營隊 教室說明 -->
+      <div class="finder-notice">
+        <span class="finder-notice-icon">ℹ️</span>
+        <span><strong>以下為常態教室</strong>（每週固定開課）。<strong>寒暑假營隊</strong>另開設、可能借用其他教室或場地、實際梯次與地點以營隊頁面公告為準。</span>
+      </div>
     </div>
   </section>
 
@@ -1024,7 +1046,7 @@
     <div class="container">
       <div class="sec-header">
         <span class="sec-eyebrow">▸ FAQ · 教學據點常見問題</span>
-        <h2 class="sec-title">關於教學據點的 <span class="accent">6 個常見問題</span></h2>
+        <h2 class="sec-title">關於教學據點的 <span class="accent">7 個常見問題</span></h2>
         <p class="sec-subtitle">想知道更多？請參考完整的 <a href="/faq">家長 FAQ 15 題</a></p>
       </div>
 
@@ -1090,13 +1112,28 @@
     });
 
     // ─── 2. 渲染教室卡片（依城市分組）───
+    const HQ_PHONE = '+886-2-7709-8229';
     function buildCard(loc) {
       const addr = loc.address;
       const fullAddr = addr.addressRegion + addr.addressLocality + addr.streetAddress;
-      const mapsUrl = 'https://maps.google.com/?q=' + encodeURIComponent(fullAddr);
-      const telLink = 'tel:' + loc.telephone.replace(/[^+0-9]/g, '');
-      const auditionUrl = '/auditions/new?location=' + encodeURIComponent(loc._short);
+      // GBP-friendly Maps URL（品牌名 + 教室名 + 地址，較容易 match 到正確 GBP 而非地址隔壁的店家）
+      const mapsQuery = '橘子蘋果 ' + loc._short + ' ' + fullAddr;
+      const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(mapsQuery);
       const cityShort = loc._city.replace('市', '').replace('縣', '');
+      const isHQPhone = loc.telephone === HQ_PHONE;
+      // 只有「非總機」的教室卡才顯示電話（避免重複呈現相同號碼）
+      const phoneRow = isHQPhone ? '' :
+        '<div class="loc-row">' +
+          '<span class="loc-row-icon">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
+          '</span>' +
+          '<a href="tel:' + loc.telephone.replace(/[^+0-9]/g, '') + '">' + loc.telephone.replace(/^\+886-/, '0').replace(/^\+60-/, '+60 ') + '</a>' +
+          '<span class="loc-row-note">教室直撥</span>' +
+        '</div>';
+      const extraRow = loc._extra ?
+        '<div class="loc-row loc-row-extra"><span class="loc-row-icon">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' +
+        '</span>' + loc._extra + '</div>' : '';
 
       return '<div class="loc-card" data-city="' + loc._city + '" data-search="' +
              (loc._short + ' ' + loc._city + ' ' + loc._district + ' ' + fullAddr).toLowerCase() + '">' +
@@ -1108,16 +1145,8 @@
           '</span>' +
           '<a href="' + mapsUrl + '" target="_blank" rel="noopener">' + fullAddr + '</a>' +
         '</div>' +
-        '<div class="loc-row">' +
-          '<span class="loc-row-icon">' +
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
-          '</span>' +
-          '<a href="' + telLink + '">' + loc.telephone.replace(/^\+886-/, '0').replace(/^\+60-/, '+60 ').replace(/-/g, '-') + '</a>' +
-        '</div>' +
-        '<div class="loc-card-actions">' +
-          '<a class="loc-btn loc-btn-primary" href="' + auditionUrl + '" data-oa-cta="loc-' + loc['@id'].split('#')[1] + '">預約試聽</a>' +
-          '<a class="loc-btn loc-btn-secondary" href="' + mapsUrl + '" target="_blank" rel="noopener">地圖導航</a>' +
-        '</div>' +
+        phoneRow +
+        extraRow +
       '</div>';
     }
 
