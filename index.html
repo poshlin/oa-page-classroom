@@ -31,6 +31,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <!-- ══ 結構化資料 @graph：Organization + EducationalOrganization + WebSite + BreadcrumbList + WebPage + Article + Speakable ══ -->
@@ -116,6 +117,7 @@
       },
       {
         "@type": "BreadcrumbList",
+        "@id": "https://orangeapple.co/classroom/#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://orangeapple.co/" },
           { "@type": "ListItem", "position": 2, "name": "教學據點", "item": "https://orangeapple.co/classroom/" }
@@ -123,10 +125,15 @@
       },
       {
         "@type": "WebPage",
+        "@id": "https://orangeapple.co/classroom/",
         "name": "教學據點 ｜ 橘子蘋果程式學苑",
-        "description": "橘子蘋果全台 12 縣市 44 間實體教學據點 + 馬來西亞分校，依縣市快速找到最近教室並預約免費試聽。",
+        "description": "橘子蘋果全台 12 縣市 44 間實體教學據點 + 馬來西亞分校，依縣市快速找到最近教室並預約免費試聽。線上課程不限地區、覆蓋全台 22 縣市。Google 商家 4.9 星、2,200+ 則評論。",
         "url": "https://orangeapple.co/classroom/",
         "isPartOf": { "@id": "https://orangeapple.co/#website" },
+        "about": { "@id": "https://orangeapple.co/#organization" },
+        "mainEntity": { "@id": "https://orangeapple.co/classroom/#location-itemlist" },
+        "primaryImageOfPage": "https://orangeapple.co/classroom/assets/og-classroom.png",
+        "breadcrumb": { "@id": "https://orangeapple.co/classroom/#breadcrumb" },
         "inLanguage": "zh-TW",
         "datePublished": "2026-06-25",
         "dateModified": "2026-06-25"
@@ -1232,7 +1239,7 @@
         就近找到孩子的程式學習基地
       </h1>
       <p class="hero-desc">
-        <strong>橘子蘋果程式學苑</strong>實體教學據點橫跨台北、新北、基隆、桃園、新竹、苗栗、台中、嘉義、台南、高雄、屏東 <strong>12 縣市</strong>，並在 <strong>馬來西亞吉隆坡</strong>設有海外分校。<br>
+        <strong>橘子蘋果程式學苑</strong>實體教學據點橫跨台北、新北、基隆、桃園、新竹市、新竹縣、苗栗、台中、嘉義、台南、高雄、屏東 <strong>12 縣市</strong>，並在 <strong>馬來西亞吉隆坡</strong>設有海外分校。<br>
         住家附近沒有實體教室？<strong>線上課程不限地區</strong>、教學品質與實體完全相同。
       </p>
 
