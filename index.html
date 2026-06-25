@@ -118,13 +118,20 @@
 
        資料 schema：每筆需包含 _city, _district, _short, address.streetAddress /
        addressLocality / addressRegion / addressCountry, telephone (+886-X-XXXX-XXXX 格式)
-       可選欄位：_extra（特色說明，如「中文 + 英文授課」）
+       可選欄位：
+       - _extra      特色說明（如「中文 + 英文授課」）
+       - _isCamp     true 代表該地點同時提供寒暑假營隊
+       - _isCampOnly true 代表只有營隊、不開常態課（預設『全部』篩選會隱藏）
+       - _gbpUrl     若為直營教室且有獨立 Google Business Profile、填入 GBP URL
+                     例：https://www.google.com/maps/place/橘子蘋果兒童程式學苑/@25.0272722,121.5220187,17z
+                     有此欄位時、點地址會直接跳該店家 GBP 頁面（CTR / 品牌權威加分）
+                     未填則 fallback 用純地址 search、避免合作校（無 GBP）跳到找不到內容
        ══════════════════════════════════════════════════════════════════════════════ -->
   <script id="locations-data" type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#taipei-guting", "name": "古亭教室 — 橘子蘋果程式學苑", "_city": "台北市", "_district": "中正區", "_short": "古亭教室", "_isCamp": true, "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "羅斯福路二段70號6樓之4", "addressLocality": "中正區", "addressRegion": "台北市", "addressCountry": "TW" }, "telephone": "+886-2-7709-8229", "url": "https://orangeapple.co/classroom/#taipei-guting" },
+      { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#taipei-guting", "name": "古亭教室 — 橘子蘋果程式學苑", "_city": "台北市", "_district": "中正區", "_short": "古亭教室", "_isCamp": true, "_gbpUrl": "https://www.google.com/maps/place/橘子蘋果兒童程式學苑/@25.0272722,121.5220187,17z", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "羅斯福路二段70號6樓之4", "addressLocality": "中正區", "addressRegion": "台北市", "addressCountry": "TW" }, "telephone": "+886-2-7709-8229", "url": "https://orangeapple.co/classroom/#taipei-guting" },
       { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#taipei-minquan", "name": "民權教室 — 橘子蘋果程式學苑", "_city": "台北市", "_district": "大同區", "_short": "民權教室", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "承德路二段46號3樓", "addressLocality": "大同區", "addressRegion": "台北市", "addressCountry": "TW" }, "telephone": "+886-2-7709-8229", "url": "https://orangeapple.co/classroom/#taipei-minquan" },
       { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#taipei-songshan", "name": "松山教室 — 橘子蘋果程式學苑", "_city": "台北市", "_district": "松山區", "_short": "松山教室", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "南京東路五段251巷24弄33號1樓", "addressLocality": "松山區", "addressRegion": "台北市", "addressCountry": "TW" }, "telephone": "+886-2-7709-8229", "url": "https://orangeapple.co/classroom/#taipei-songshan" },
       { "@type": "LocalBusiness", "@id": "https://orangeapple.co/classroom/#taipei-beitou", "name": "北投教室 — 橘子蘋果程式學苑", "_city": "台北市", "_district": "北投區", "_short": "北投教室", "parentOrganization": { "@id": "https://orangeapple.co/#organization" }, "address": { "@type": "PostalAddress", "streetAddress": "明德路213號1樓", "addressLocality": "北投區", "addressRegion": "台北市", "addressCountry": "TW" }, "telephone": "+886-2-2823-9225", "url": "https://orangeapple.co/classroom/#taipei-beitou" },
@@ -1173,9 +1180,11 @@
     function buildCard(loc) {
       const addr = loc.address;
       const fullAddr = addr.addressRegion + addr.addressLocality + addr.streetAddress;
-      // GBP-friendly Maps URL（品牌名 + 教室名 + 地址，較容易 match 到正確 GBP 而非地址隔壁的店家）
-      const mapsQuery = '橘子蘋果 ' + loc._short + ' ' + fullAddr;
-      const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(mapsQuery);
+      // Maps URL 策略：
+      // 1. 預設用『純地址 search』— 對所有教室（含合作校）都能找到位置
+      // 2. 若該教室為直營且有獨立 Google Business Profile，填入 _gbpUrl 欄位即會 override 為 GBP 連結（CTR/品牌權威加分）
+      const mapsUrl = loc._gbpUrl ||
+        ('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(fullAddr));
       const cityShort = loc._city.replace('市', '').replace('縣', '');
       const isHQPhone = loc.telephone === HQ_PHONE;
       const displayPhone = loc.telephone.replace(/^\+886-/, '0').replace(/^\+60-/, '+60 ');
