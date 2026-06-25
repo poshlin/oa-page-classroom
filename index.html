@@ -441,6 +441,13 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
+    /* 全頁中文段落自動避免孤字（「碑、」「校。」單獨成行）+ 強調文字不被破壞 */
+    p, .sec-subtitle, .faq-a-inner, .coverage-footnote, .coverage-remote-note, .finder-notice span {
+      text-wrap: pretty;
+      word-break: break-word;
+    }
+    /* strong / a / 不被自動斷字打散 */
+    strong, a { word-break: keep-all; }
 
     a { color: var(--orange-dark); transition: color 0.2s; }
     a:hover { color: var(--orange); }
